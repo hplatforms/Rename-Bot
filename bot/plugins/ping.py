@@ -34,7 +34,7 @@ async def help_handler(c: Client, m: "types.Message"):
         text="Medyayı İndirmeden Yeniden Adlandırabilirim!\n"
              "Hız, Medya DC'nize Bağlıdır.\n\n"
              "Bana Medyayı Gönder ve /rename Komutuyla Cevapla.\n\n"
-             "Thumbnail Ayarlamak İçin Resim Gönder ve /set_thumnail Komutuyla Yanıtla\n\n"
+             "Thumbnail Ayarlamak İçin Resim Gönder ve /set_thumbnail Komutuyla Yanıtla\n\n"
              "Ayarlı Thumbnail Görmek İçin /show_thumbnail Komutu Gönder.",
         reply_markup=types.InlineKeyboardMarkup([[
            types.InlineKeyboardButton("Ayarları Göster",
