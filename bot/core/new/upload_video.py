@@ -48,7 +48,7 @@ class UploadVideo:
         reply_to_message_id: int = None,
         schedule_date: int = None,
         reply_markup: Union[InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply, None] = None,
-        status_message: str = "📤 Uploading as Video ..."
+        status_message: str = "📤 Video Yükleniyor ..."
     ) -> Optional[Message]:
         """
         Advanced Video Uploader Function.
@@ -105,15 +105,15 @@ class UploadVideo:
                 else:
                     thumbnail = None
             except Exception as error:
-                print("Unable to Get Video Data!\n\n"
-                      f"Error: {error}")
+                print("Video Verileri Alınamıyor!\n\n"
+                      f"Hata: {error}")
                 traceback.print_exc()
                 thumbnail = None
         else:
             thumbnail = thumb
         if not caption:
-            caption = f"**File Name:** `{os.path.basename(video)}`" \
-                      "\n\n**@AH_RenameBot**"
+            caption = f"**Dosya Adı:** `{os.path.basename(video)}`" \
+                      "\n\n**@trbotlistesi**"
         c_time = time.time()
         await self.send_video(
             chat_id=chat_id,
@@ -139,4 +139,4 @@ class UploadVideo:
                 c_time
             )
         )
-        await editable_message.edit("Uploaded Successfully!")
+        await editable_message.edit("Başarıyla Yüklendi!")
