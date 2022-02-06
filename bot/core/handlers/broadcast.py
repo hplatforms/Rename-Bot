@@ -27,11 +27,11 @@ async def send_msg(user_id, message):
         await asyncio.sleep(e.x)
         return send_msg(user_id, message)
     except InputUserDeactivated:
-        return 400, f"{user_id} : deactivated\n"
+        return 400, f"{user_id} : Devre Dışı\n"
     except UserIsBlocked:
-        return 400, f"{user_id} : blocked the bot\n"
+        return 400, f"{user_id} : Botu Engelledi\n"
     except PeerIdInvalid:
-        return 400, f"{user_id} : user id invalid\n"
+        return 400, f"{user_id} : Kullanıcı ID Geçersiz\n"
     except Exception as e:
         return 500, f"{user_id} : {traceback.format_exc()}\n"
 
@@ -44,7 +44,7 @@ async def broadcast_handler(m: Message):
         if not broadcast_ids.get(broadcast_id):
             break
     out = await m.reply_text(
-        text=f"Broadcast Started! You will be notified with log file when all the users are notified."
+        text=f"Yayın Başladı! Tüm Kullanıcılar Bilgilendirildiğinde Günlük Dosyası ile Bilgilendirileceksiniz."
     )
     start_time = time.time()
     total_users = await db.total_users_count()
@@ -89,17 +89,17 @@ async def broadcast_handler(m: Message):
     await out.delete()
     if failed == 0:
         await m.reply_text(
-            text=f"broadcast completed in `{completed_in}`\n\n"
-                 f"Total users {total_users}.\n"
-                 f"Total done {done}, {success} success and {failed} failed.",
+            text=f"Yayın Tamamlandı `{completed_in}`\n\n"
+                 f"Toplam Kullanıcı {total_users}.\n"
+                 f"Toplam {done}, {success} Başarılı ve {failed} Başarısız.",
             quote=True
         )
     else:
         await m.reply_document(
             document='broadcast.txt',
-            caption=f"broadcast completed in `{completed_in}`\n\n"
-                    f"Total users {total_users}.\n"
-                    f"Total done {done}, {success} success and {failed} failed.",
+            caption=f"Yayın Tamamlandı `{completed_in}`\n\n"
+                    f"Toplam Kullanıcı {total_users}.\n"
+                    f"Toplam {done}, {success} Başarılı ve {failed} Başarısız.",
             quote=True
         )
     await aiofiles.os.remove('broadcast.txt')
