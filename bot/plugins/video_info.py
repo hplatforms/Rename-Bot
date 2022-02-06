@@ -48,9 +48,9 @@ async def video_info_handler(c: Client, m: Message):
             subtitle_title = f[len("change-subtitle-title"):].strip()
     file_type = m.reply_to_message.video or m.reply_to_message.document
     if not file_type.mime_type.startswith("video/"):
-        await m.reply_text("This is not a Video!", True)
+        await m.reply_text("Bu Bir Video Değil!", True)
         return
-    editable = await m.reply_text("Downloading Video ...", quote=True)
+    editable = await m.reply_text("Video İndiriliyor ...", quote=True)
     dl_loc = Config.DOWNLOAD_DIR + "/" + str(m.from_user.id) + "/"
     if not os.path.isdir(dl_loc):
         os.makedirs(dl_loc)
@@ -60,19 +60,19 @@ async def video_info_handler(c: Client, m: Message):
         file_name=dl_loc,
         progress=progress_for_pyrogram,
         progress_args=(
-            "Downloading ...",
+            "İndiriliyor ...",
             editable,
             c_time
         )
     )
-    await editable.edit("Trying to Fetch Media Data ...")
+    await editable.edit("Veriler Alınıyor ...")
     output = await execute(f"ffprobe -hide_banner -show_streams -print_format json '{the_media}'")
     if not output:
         try:
             os.remove(the_media)
         except Exception as error:
             print(f"Error: {error}")
-        await editable.edit("Can't fatch media info!")
+        await editable.edit("Medya Bilgileri Alınamıyor!")
         return
 
     details = json.loads(output[0])
@@ -90,10 +90,10 @@ async def video_info_handler(c: Client, m: Message):
     if not os.path.isdir(dl_loc):
         os.makedirs(dl_loc)
     middle_cmd += f" '{dl_loc}{new_file_name}'"
-    await editable.edit("Please Wait ...\n\nProcessing Video ...")
+    await editable.edit("Lütfen Bekle ...\n\nVideo İşleniyor ...")
     output = await execute(middle_cmd)
     print(output, flush=True)
-    await editable.edit("Renamed Successfully!")
+    await editable.edit("Başarıyla Adlandırıldı!")
     try: os.remove(the_media)
     except: pass
     upload_as_doc = await db.get_upload_as_doc(m.from_user.id)
