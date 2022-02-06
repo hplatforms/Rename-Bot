@@ -81,7 +81,7 @@ async def rename_handler(c: Client, m: Message):
             file_name=file_name,
             progress=progress_for_pyrogram,
             progress_args=(
-                "Uploading ...\n"
+                "Yükleniyor ...\n"
                 f"DC: {_c_file_id.dc_id}",
                 editable,
                 c_time
