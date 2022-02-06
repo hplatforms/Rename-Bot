@@ -34,7 +34,7 @@ async def show_settings(m: "types.Message"):
     if caption:
         buttons_markup.append([types.InlineKeyboardButton("Kayıtlı Altyazı Göster",
                                                           callback_data="showCaption")])
-    buttons_markup.append([types.InlineKeyboardButton("Close Message",
+    buttons_markup.append([types.InlineKeyboardButton("Mesajdan Çık",
                                                       callback_data="closeMessage")])
 
     try:
