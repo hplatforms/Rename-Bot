@@ -59,26 +59,26 @@ class NormalRename(Scaffold):
                 f"{Config.DOWNLOAD_DIR}/{chat_id}/{time.time()}/",
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Downloading ...",
+                    "İndiriliyor ...",
                     editable,
                     c_time
                 )
             )
             if not os.path.exists(dl_file_path):
-                return None, "File not found!"
+                return None, "Dosya Bulunamadı!"
             try:
-                await editable.edit("Please Wait ...")
+                await editable.edit("Lütfen Bekleyin ...")
             except MessageNotModified: pass
 
             try:
                 c_time = time.time()
                 file = await self.save_file(dl_file_path, progress=progress_for_pyrogram, progress_args=(
-                    "Uploading ...",
+                    "Yükleniyor ...",
                     editable,
                     c_time
                 ))
 
-                await editable.edit("Processing Thumbnail ...")
+                await editable.edit("Thumbnail İşleniyor ...")
                 upload_as_doc = await db.get_upload_as_doc(chat_id)
                 has_db_thumb = await db.get_thumbnail(chat_id)
                 width = kwargs.get("width", 0)
@@ -106,7 +106,7 @@ class NormalRename(Scaffold):
                 elif (upload_as_doc is False) and (upload_mode == "video"):
                     duration = kwargs.get("duration", 0)
                     if not duration:
-                        await editable.edit("Fetching Video Duration ...")
+                        await editable.edit("Video Süresi Alınıyor ...")
                         duration, _, __ = await get_video_info(dl_file_path)
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(dl_file_path) or "video/mp4",
@@ -145,7 +145,7 @@ class NormalRename(Scaffold):
                     )
 
                 else:
-                    await editable.edit("I can't rename this type of media!")
+                    await editable.edit("Bu Tür Medyayı Yeniden Adlandıramıyorum!")
                     await rm_file(dl_file_path)
                     return None, "InvalidMedia"
 
@@ -166,7 +166,7 @@ class NormalRename(Scaffold):
                     except FilePartMissing as e:
                         await self.save_file(dl_file_path, file_id=file.id, file_part=e.x)
                     else:
-                        await editable.edit("Uploaded Successfully!")
+                        await editable.edit("Başarıyla Yüklendi!")
                         await rm_file(dl_file_path)
                         return True, False
             except StopTransmission:
